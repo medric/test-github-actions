@@ -1,6 +1,6 @@
-name: Auto approve
+name: Auto review assign
 
-on: pull_request
+on: push
 
 jobs:
   reviews-assign:
@@ -10,9 +10,8 @@ jobs:
       - name: Checkout tools repo
         uses: actions/checkout@v2
         with:
-          repository: medric/actions
+          repository: medric/auto-review-assign-action
       - name: Hello world action step
-        uses: ./review-assign
-        id: hello
+        uses: ./dist/index.js
         with:
-          who-to-greet: 'Mona the Octocat'
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
