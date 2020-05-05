@@ -1,4 +1,6 @@
-on: [push]
+name: Auto approve
+
+on: pull_request
 
 jobs:
   reviews-assign:
@@ -12,6 +14,5 @@ jobs:
           uses: ./review-assign
       - name: review & assign
         id: hello
-        uses: medric/github-actions/review-assign@v1
         with:
           who-to-greet: "Mona the Octocat"
