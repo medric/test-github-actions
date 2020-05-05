@@ -1,0 +1,17 @@
+on: [push]
+
+jobs:
+  reviews-assign:
+    runs-on: ubuntu-latest
+    name: Test job
+    steps:
+      - name: Checkout tools repo
+        uses: actions/checkout@v2
+        with:
+          repository: medric/github-actions
+          uses: ./review-assign
+      - name: review & assign
+        id: hello
+        uses: medric/github-actions/review-assign@v1
+        with:
+          who-to-greet: "Mona the Octocat"
