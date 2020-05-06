@@ -12,6 +12,6 @@ jobs:
         with:
           repository: medric/auto-review-assign-action
       - name: Hello world action step
-        uses: ./dist/index.js
+        uses: ./
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
