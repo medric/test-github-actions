@@ -1,19 +1,26 @@
 name: Auto review assign
 
-on: push
+on: [push,pull_request]
 
 jobs:
   reviews-assign:
     runs-on: ubuntu-latest
     name: Test job
     steps:
-      - name: Checkout tools repo
-        uses: actions/checkout@v2
+      - name: Wait for build to succeed
+        uses: fountainhead/action-wait-for-check@v1.0.0
+        id: wait-for-build
         with:
-          repository: medric/auto-review-assign-action
-      - name: ls
-        run: ls
-      - name: Hello world action step
-        uses: ./
+          token: ${{ secrets.GITHUB_TOKEN }}
+          checkName: build
+          ref: github.event.pull_request.head.sha || github.sha
+
+      - name: Do something with a passing build
+        if: steps.wait-for-build.outputs.conclusion == 'success'
+
+      - name: Do something with a failing build
+        uses: medric/auto-review-assign-action@master
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          reviewers: webschool
+        if: steps.wait-for-build.outputs.conclusion == 'failure'
