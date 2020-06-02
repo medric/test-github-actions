@@ -3,9 +3,9 @@ name: Auto review assign
 on: [pull_request]
 
 jobs:
-  reviews-assign:
+  assigns-if-fail:
     runs-on: ubuntu-latest
-    name: Assign if fail
+    name: Assigns if fail
     steps:
       - name: Do something with a failing build
         uses: medric/auto-review-assign-action@master
