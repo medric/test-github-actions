@@ -11,4 +11,4 @@ jobs:
         uses: medric/auto-review-assign-action@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          reviewers: webschool
+          reviewers: medric
