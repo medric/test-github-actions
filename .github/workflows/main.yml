@@ -1,14 +1,34 @@
-name: Auto review assign
-
-on: [pull_request]
+name: Auto request review
+on: [ push, pull_request ]
 
 jobs:
-  assigns-if-fail:
+  auto-request-review:
     runs-on: ubuntu-latest
-    name: Assigns if fail
     steps:
-      - name: Do something with a failing build
-        uses: medric/auto-review-assign-action@master
+      - name: Checkout GitHub Action Repo
+        uses: actions/checkout@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          reviewers: medric
+          repository: airtasker/label-dependabot-pr-action
+          ref: master
+          token: ${{ secrets.REPO_TOKEN }} # stored in GitHub secrets
+          path: .github/actions/label-dependabot-pr
+      - name: Checkout GitHub Action Repo
+        uses: actions/checkout@v2
+        with:
+          repository: airtasker/auto-request-review-action
+          ref: master
+          token: ${{ secrets.REPO_TOKEN }} # stored in GitHub secrets
+          path: .github/actions/auto-request-review-action
+      - name: Run label-dependabot-pr
+        id: label
+        uses: ./.github/actions/label-dependabot-pr
+        # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Run auto request review
+        uses: ./.github/actions/label-dependabot-pr
+        # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          reviewers: webschool # or a comma-separated list of Github usernames
+          forceRequestReview: ${{ steps.label.outputs.releaseLabel == 'major' }}
