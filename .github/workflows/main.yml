@@ -1,34 +1,36 @@
 name: Auto request review
-on: [ push, pull_request ]
+on: pull_request
 
 jobs:
   auto-request-review:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout GitHub Action Repo
+      # - name: Checkout GitHub Label Dependabot PR
+      #   uses: actions/checkout@v2
+      #   # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+      #   with:
+      #     repository: airtasker/label-dependabot-pr-action
+      #     ref: master
+      #     token: ${{ secrets.REPO_TOKEN }} # stored in GitHub secrets
+      #     path: .github/actions/label-dependabot-pr
+      - name: Checkout GitHub Request Review
         uses: actions/checkout@v2
-        with:
-          repository: airtasker/label-dependabot-pr-action
-          ref: master
-          token: ${{ secrets.REPO_TOKEN }} # stored in GitHub secrets
-          path: .github/actions/label-dependabot-pr
-      - name: Checkout GitHub Action Repo
-        uses: actions/checkout@v2
+        # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
           repository: airtasker/auto-request-review-action
-          ref: 9679e78291aab3272b188b9a75dcb0f554ff8a04
+          ref: master
           token: ${{ secrets.REPO_TOKEN }} # stored in GitHub secrets
           path: .github/actions/auto-request-review-action
-      - name: Run label-dependabot-pr
-        id: label
-        uses: ./.github/actions/label-dependabot-pr
-        # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
-        with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      # - name: Run label-dependabot-pr
+      #   id: label
+      #   uses: ./.github/actions/label-dependabot-pr
+      #   # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+      #   with:
+      #     github-token: '${{ secrets.GITHUB_TOKEN }}'
       - name: Run auto request review
-        uses: ./.github/actions/label-dependabot-pr
+        uses: ./.github/actions/auto-request-review-action
         # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
-          github-token: "${{ secrets.GITHUB_TOKEN }}"
-          reviewers: webschool # or a comma-separated list of Github usernames
+          github-token: '${{ secrets.GITHUB_TOKEN }}'
+          reviewers: web school # or a comma-separated list of Github usernames
           forceRequestReview: ${{ steps.label.outputs.releaseLabel == 'major' }}
