@@ -31,6 +31,6 @@ jobs:
         uses: ./.github/actions/auto-request-review-action
         # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
-          github-token: '${{ secrets.GITHUB_TOKEN }}'
+          github-token: '${{ secrets.REPO_TOKEN }}'
           reviewers: web school # or a comma-separated list of Github usernames
           forceRequestReview: ${{ steps.label.outputs.releaseLabel == 'major' }}
