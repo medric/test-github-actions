@@ -1,5 +1,5 @@
 name: Auto request review
-on: [push, pull_request]
+on: pull_request
 
 jobs:
   auto-request-review:
@@ -18,7 +18,7 @@ jobs:
         # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
           repository: airtasker/auto-request-review-action
-          ref: 02aae3c77de377b838b11578d8b5c82baf6b41fa
+          ref: 0879d0f964f38da6491ec39826da5dcf053cd08b
           token: ${{ secrets.REPO_TOKEN }} # stored in GitHub secrets
           path: .github/actions/auto-request-review-action
       # - name: Run label-dependabot-pr
