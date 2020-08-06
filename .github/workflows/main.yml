@@ -18,7 +18,7 @@ jobs:
         # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
           repository: airtasker/auto-request-review-action
-          ref: 26c3e8fd189616e599d4cefbb71492bcc052b739
+          ref: 6351aec4306067586d375a6676ec463e2e124e13
           token: ${{ secrets.REPO_TOKEN }} # stored in GitHub secrets
           path: .github/actions/auto-request-review-action
       # - name: Run label-dependabot-pr
@@ -31,6 +31,7 @@ jobs:
         uses: ./.github/actions/auto-request-review-action
         # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
-          github-token: '${{ secrets.REPO_TOKEN }}'
+          github-token: "${{ secrets.REPO_TOKEN }}"
           reviewers: web school # or a comma-separated list of Github usernames
           forceRequestReview: ${{ steps.label.outputs.releaseLabel == 'major' }}
+          checks: "ci/circleci: cypress-test-replay-electron, ci/circleci: unit-test"
