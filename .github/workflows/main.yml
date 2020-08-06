@@ -18,7 +18,7 @@ jobs:
         # if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
         with:
           repository: airtasker/auto-request-review-action
-          ref: 6351aec4306067586d375a6676ec463e2e124e13
+          ref: 3b8a394fb9deecc9b11dc13de522006d60afe986
           token: ${{ secrets.REPO_TOKEN }} # stored in GitHub secrets
           path: .github/actions/auto-request-review-action
       # - name: Run label-dependabot-pr
